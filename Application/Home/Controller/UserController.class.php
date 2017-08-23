@@ -58,17 +58,23 @@ class UserController extends Controller {
     }
 
     public function register(){
-	$this->display('register');
+	$this->display();
     }
 
     public function registerValidate(){
 	$data['username'] = $_POST['username'];
 	$data['email'] = $_POST['email'];
-	$user = D("User");
-	if (!$user->create($data)) {
-	    exit($user->getError());
+	if ($this->checkVerify($_POST['captcha'])) {
+	    $user = D("User");
+	    if (!$user->create($data)) {
+	        $result = 'Register failed';
+	    }
+	    $result = 'Success';
+	} else {
+	    $result = 'Enter code not passed! ';
 	}
-	echo 'validation passes';
+	$this->assign('result', $result);
+	$this->display('register');
     }
 
     public function relationFind(){
@@ -76,4 +82,49 @@ class UserController extends Controller {
 	$record = $user->relation(true)->find(93);
 	dump($record);
     }
+
+    public function uploadDemo(){
+	$this->display();
+    }
+
+    public function uploadFile(){
+	$upload = new \Think\Upload();
+	$upload->maxSize = 3145728;
+	$upload->exts = array('jpg','gif','png','jpeg');
+	$upload->rootPath = './Uploads/';
+	$upload->savePath = 'images/';
+	$info = $upload->upload();
+	if (!$info) {
+	    $this->error($upload->getError());
+	} else {
+	    $this->success('upload done!');
+	}
+    }
+
+    public function dealImage(){
+	$image = new \Think\Image();
+	$image->open('./shiyanlou.png');
+	// $crop = $image->crop(400,400)->save('./Uploads/images/crop.png');
+	// $thumb = $image->thumb(256,256)->save('./Uploads/images/thumb.png');
+	$water = $image->water('./logo.png')->save("./Uploads/images/water_mark.png");
+    }
+
+    public function verify(){
+	$config = array(
+	    'fontSize' => 30,
+	    'length' => 5,
+	    'useNoise' => true,	
+	    'useZh' => false,
+	);
+	$verify = new \Think\Verify($config);
+	$verify->entry();
+    }
+
+    public function checkVerify($code,$id=''){
+	$verify = new \Think\Verify();
+	return $verify->check($code,$id);
+    }
+
 }
+
+

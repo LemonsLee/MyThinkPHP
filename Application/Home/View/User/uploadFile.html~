@@ -1,0 +1,11 @@
+<extend name="Index/base" />
+<block name="main">
+    <form method="post" action="__URL__/upload" enctype="multipart/form-data">
+	<div class="form-group">
+	    <label for="exampleInputFile">Choose File</label>
+	    <input type="file" name="file" id="exampleInputFile">
+	    <p class="help-block">Choose your file to upload</p>
+	</div>
+	<button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</block>
