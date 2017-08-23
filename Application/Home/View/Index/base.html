@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<block name="title"><title>ThinkPHP Base Template</title></block>
+
+<import type='css' file='css.bootstrap'/>
+</head>
+<body>
+<div class="container">
+<div class="col-md-2"></div>
+<block name="menu"></block>
+<div class="row">
+  <div class="col-md-2"><block name="left"></block></div>
+  <div class="col-md-8"><block name="main"></block></div>
+  <div class="col-md-2"><block name="right"></block></div>
+</div>
+
+<div class="col-md-2"></div>
+<block name="footer"></block>
+</div>
+</body>
+</html>
