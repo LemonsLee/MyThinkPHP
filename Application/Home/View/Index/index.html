@@ -1,0 +1,15 @@
+<html>
+    <head>
+	<title>IndexController index</title>
+    </head>
+    <body>
+        <h1>Hello {$user['username']|default="Jerry"}</h1>
+	<eq name="status" value="1">
+	    normal
+	</eq>
+	<volist name="list" id="vo">
+	    {$vo.username}:{$vo.email}
+	    <br/>
+	</volist>
+    </body>
+</html>
